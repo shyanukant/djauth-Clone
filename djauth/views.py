@@ -1,4 +1,3 @@
-import re
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -30,16 +29,6 @@ def signup_view(request):
             messages.warning(request, "Password must be atleast 8 characters.")
             return redirect(reverse("signup"))
         
-        # elif not re.search("[a-z]", password):
-        #     flag = -1
-        # elif not re.search("[A-Z]", password):
-        #     flag = -1
-        # elif not re.search("[0-9]", password):
-        #     flag = -1
-        # elif not re.search("[_!@#$%^&*]", password):
-        #     flag = -1
-        # else:
-        #     pass
 
         if flag == 0:
             try :
