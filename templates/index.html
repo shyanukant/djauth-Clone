@@ -1,25 +1,33 @@
 {% extends "base.html" %}
+
 {% block content %}
-    <h1>Welcome to the Home Page</h1>
+<div class="container mt-5">
+  <div class="card shadow-sm p-4">
+    <h1 class="mb-4 text-primary">Welcome to the Home Page</h1>
+
     {% if user.is_authenticated %}
-  <h2>Welcome, {{ user.first_name }}!</h2>
-  <p>Email: {{ user.email }}</p>
+      <h3 class="mb-3">Hello, <span class="text-success">{{ user.first_name }}</span>!</h3>
 
-  {% if profile %}
-    <p>Phone: {{ profile.phone_number }}</p>
-    <p>Address: {{ profile.address }}</p>
-    <p>Occupation: {{ profile.occupation }}</p>
-  {% else %}
-    <p>No profile data available.</p>
-  {% endif %}
-  <form method="post" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-  </form>
+      <ul class="list-group mb-4">
+        <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+        {% if profile %}
+          <li class="list-group-item"><strong>Phone:</strong> {{ profile.phone_number }}</li>
+          <li class="list-group-item"><strong>Address:</strong> {{ profile.address }}</li>
+          <li class="list-group-item"><strong>Occupation:</strong> {{ profile.occupation }}</li>
+        {% else %}
+          <li class="list-group-item text-muted">No profile data available.</li>
+        {% endif %}
+      </ul>
 
-{% else %}
-  <h2>Welcome Guest!</h2>
-  <p>Please <a href="{% url 'login' %}">login</a> to see your profile.</p>
-{% endif %}
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Logout</button>
+      </form>
 
+    {% else %}
+      <h3 class="text-warning">Welcome Guest!</h3>
+      <p>Please <a href="{% url 'login' %}" class="btn btn-outline-primary">Login</a> to see your profile.</p>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}

@@ -1,11 +1,41 @@
-<h2>Update Profile</h2>
-<form method="POST">
-  {% csrf_token %}
-  <h3>User Info</h3>
-  {{ user_form.as_p }}
+{% extends "base.html" %}
 
-  <h3>Profile Info</h3>
-  {{ profile_form.as_p }}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Update Profile</h2>
 
-  <button type="submit">Save</button>
-</form>
+  <form method="POST" class="card p-4 shadow-sm">
+    {% csrf_token %}
+
+    <div class="mb-4">
+      <h4>User Info</h4>
+      {{ user_form.non_field_errors }}
+      {% for field in user_form %}
+        <div class="mb-3">
+          <label class="form-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <div class="text-danger small">{{ field.errors|striptags }}</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-4">
+      <h4>Profile Info</h4>
+      {{ profile_form.non_field_errors }}
+      {% for field in profile_form %}
+        <div class="mb-3">
+          <label class="form-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <div class="text-danger small">{{ field.errors|striptags }}</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+</div>
+{% endblock %}
