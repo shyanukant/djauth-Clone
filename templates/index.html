@@ -2,16 +2,24 @@
 {% block content %}
     <h1>Welcome to the Home Page</h1>
     {% if user.is_authenticated %}
+  <h2>Welcome, {{ user.first_name }}!</h2>
+  <p>Email: {{ user.email }}</p>
 
-        <p>Hello, {{ user.first_name }}!</p>
-        <p>Your email is: {{ user.email }}</p>
-        <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-        <p>You are not logged in.</p>
-        <a href="{% url 'login' %}">Login</a>
-        <p class="form-text">
-            Don’t have an account yet? <a href="{% url 'signup' %}"
-                class="">Sign up</a>
-        </p>
-    {% endif %}
+  {% if profile %}
+    <p>Phone: {{ profile.phone_number }}</p>
+    <p>Address: {{ profile.address }}</p>
+    <p>Occupation: {{ profile.occupation }}</p>
+  {% else %}
+    <p>No profile data available.</p>
+  {% endif %}
+  <form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+  </form>
+
+{% else %}
+  <h2>Welcome Guest!</h2>
+  <p>Please <a href="{% url 'login' %}">login</a> to see your profile.</p>
+{% endif %}
+
 {% endblock %}
